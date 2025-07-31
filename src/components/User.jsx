@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "./UserNameModal";
 import {
   useQuery,
   useQueryClient,
@@ -8,6 +9,7 @@ import {
 } from "@tanstack/react-query";
 
 const User = (props) => {
+  const [showModal, setShowModal] = useState(false);
   const queryClient = useQueryClient();
   const deleteUser = async () => {
     try {
@@ -38,15 +40,33 @@ const User = (props) => {
   });
 
   return (
-    <div key={props.index} className="row mb-2">
-      <div className="col-md-1">{props.name} </div>
-      <button
-        className="col-md-1 btn btn-primary"
-        onClick={doDeleteUser.mutate}
-      >
-        Delete
-      </button>
-    </div>
+    <>
+      {showModal && (
+        <Modal
+          key={props.id}
+          id={props.id}
+          name={props.name}
+          setShowModal={setShowModal}
+          mode="user"
+        />
+      )}
+      <div key={props.index} className="row mb-3">
+        <div className="col-md-2">{props.name} </div>
+        <button
+          className="col-md-1 btn btn-primary"
+          onClick={doDeleteUser.mutate}
+        >
+          Delete
+        </button>
+
+        <button
+          className="col-md-1 btn btn-warning"
+          onClick={() => setShowModal(true)}
+        >
+          Update
+        </button>
+      </div>
+    </>
   );
 };
 
