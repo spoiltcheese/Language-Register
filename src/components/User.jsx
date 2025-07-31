@@ -51,7 +51,9 @@ const User = (props) => {
         />
       )}
       <div key={props.index} className="row mb-3">
-        <div className="col-md-2">{props.name} </div>
+        <div className="col-md-2">
+          <a href={`../user/${props.id}`}>{props.name}</a>{" "}
+        </div>
         <button
           className="col-md-1 btn btn-primary"
           onClick={doDeleteUser.mutate}

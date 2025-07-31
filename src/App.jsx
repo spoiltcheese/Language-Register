@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import {
   useQuery,
   useQueryClient,
@@ -11,6 +13,7 @@ import {
 import DisplayLanguages from "./components/DisplayLanguages";
 import NavBar from "./components/NavBar";
 import DisplayUsers from "./components/DisplayUsers";
+import DisplaySingleUser from "./components/DisplaySingleUser";
 
 function App() {
   return (
@@ -20,10 +23,7 @@ function App() {
         <Route path="/" element={<Navigate replace to="/languages" />} />
         <Route path="/languages" element={<DisplayLanguages />} />
         <Route path="/users" element={<DisplayUsers />} />
-        {/* <Route
-          path="/mailboxes/:mailboxId"
-          element={<MailboxDetails mailboxes={mailboxes} />}
-        /> */}
+        <Route path="/user/:userId" element={<DisplaySingleUser />} />
 
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

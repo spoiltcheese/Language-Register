@@ -5,12 +5,12 @@ import styles from "./Modal.module.css";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const EditLanguagesNameOverlay = (props) => {
+const UpdateLanguagesNameOverlay = (props) => {
   const nameRef = useRef();
 
   const queryClient = useQueryClient();
 
-  EditLanguagesNameOverlay.propTypes = {
+  UpdateLanguagesNameOverlay.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
   };
@@ -69,4 +69,4 @@ const EditLanguagesNameOverlay = (props) => {
   );
 };
 
-export default EditLanguagesNameOverlay;
+export default UpdateLanguagesNameOverlay;
