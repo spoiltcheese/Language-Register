@@ -16,7 +16,6 @@ const DisplaySingleUser = (props) => {
   const userLanguageRef = useRef();
 
   const { userId } = useParams();
-
   const languageRef = useRef();
 
   const getLanguages = async () => {
@@ -185,15 +184,13 @@ const DisplaySingleUser = (props) => {
           })}
       </DropdownButton>
 
-      <p>Langauges of user {userNameQuery.data.name}</p>
+      {/* <p>Langauges of user {props.name}</p> */}
 
       {query.isSuccess &&
         query.data.map((item, index) => {
           return (
-            <div className="row">
-              <p className="col-md-2" key={index}>
-                {item}
-              </p>
+            <div className="row" key={index}>
+              <p className="col-md-2">{item}</p>
               <button
                 className="col-md-1 btn btn-danger"
                 onClick={() => doDeleteUserLanguage.mutate(item)}
