@@ -18,6 +18,8 @@ const DisplaySingleUser = (props) => {
   const { userId } = useParams();
   const languageRef = useRef();
 
+  console.log(userId);
+
   const getLanguages = async () => {
     try {
       const res = await fetch(import.meta.env.VITE_SERVER + "/languages");
@@ -164,7 +166,6 @@ const DisplaySingleUser = (props) => {
     <>
       {query.isLoading && <p>Loading...</p>}
       {query.isError && <p>{query.error.message}</p>}
-
       <DropdownButton
         id="dropdown-basic-button"
         title="Add Language"
@@ -183,9 +184,7 @@ const DisplaySingleUser = (props) => {
             );
           })}
       </DropdownButton>
-
-      {/* <p>Langauges of user {props.name}</p> */}
-
+      <p>Langauges of user {userNameQuery.data && userNameQuery.data.name}</p>
       {query.isSuccess &&
         query.data.map((item, index) => {
           return (
