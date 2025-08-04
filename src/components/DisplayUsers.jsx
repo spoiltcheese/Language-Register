@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   useQuery,
   useQueryClient,
@@ -12,6 +12,7 @@ import User from "./User";
 const DisplayUsers = () => {
   const queryClient = useQueryClient();
   const userRef = useRef();
+  const [errMsg, setErrMsg] = useState(true);
 
   const getUsers = async () => {
     try {
@@ -33,6 +34,12 @@ const DisplayUsers = () => {
   });
 
   const addUsers = async () => {
+    if (userRef.current.value === "") {
+      setErrMsg(true);
+      return;
+    } else {
+      setErrMsg(false);
+    }
     try {
       const res = await fetch(import.meta.env.VITE_SERVER + "/users", {
         method: "PUT",
@@ -58,6 +65,7 @@ const DisplayUsers = () => {
     mutationFn: addUsers,
     onSuccess: () => {
       queryClient.invalidateQueries(["users"]);
+      if (userRef.current) userRef.current.value = "";
     },
   });
 
@@ -68,6 +76,16 @@ const DisplayUsers = () => {
     userQuery.isError && <p>{userQuery.error.message}</p>;
   }
 
+  useEffect(() => {
+    if (doAddUser.isSuccess) {
+      setErrMsg(true);
+    }
+  }, [doAddUser.isSuccess, doAddUser.isError]);
+
+  const handleInputChange = (e) => {
+    setErrMsg(e.target.value.trim() === "");
+  };
+
   return (
     <>
       <div className="row">
@@ -76,10 +94,16 @@ const DisplayUsers = () => {
           ref={userRef}
           placeholder="add user"
           className="col-md-3"
+          onChange={handleInputChange}
         />
-        <button className="col-md-3 btn btn-primary" onClick={doAddUser.mutate}>
+        <button
+          className="col-md-3 btn btn-primary"
+          onClick={doAddUser.mutate}
+          disabled={errMsg}
+        >
           Add User
         </button>
+        {errMsg && <span>User name cannot be blank</span>}
       </div>
       Users
       {userQuery.isSuccess &&
