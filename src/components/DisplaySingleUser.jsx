@@ -18,8 +18,6 @@ const DisplaySingleUser = (props) => {
   const { userId } = useParams();
   const languageRef = useRef();
 
-  console.log(userId);
-
   const getLanguages = async () => {
     try {
       const res = await fetch(import.meta.env.VITE_SERVER + "/languages");
